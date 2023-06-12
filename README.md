@@ -18,5 +18,5 @@ Lu2Pathy es una aplicación web que contiene distintos juegos retro y de mesa. A
     
         - Fomentar un espacio de recreación, tanto para jugadores competitivos como no competitivos.
     
-        - Creación de un espacio multiplataforma, nuestra aplicación garantizará flexibilidad en los dipositivos de disponibilidad de uso (escritorio y móvil). Esto arraiga que el diseño de nuestra web sea adaptable para distintas resoluciones.
+        - Creación de un espacio multiplataforma, nuestra aplicación garantizará flexibilidad en los dispositivos de disponibilidad de uso (escritorio y móvil). Esto arraiga que el diseño de nuestra web sea adaptable para distintas resoluciones.
 </p>
