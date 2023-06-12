@@ -10,12 +10,13 @@ Lu2Pathy es una aplicación web que contiene distintos juegos retro y de mesa. A
     - Tic-Tac-Toe
 
 
-### Objetivos:
+## Objetivos:
 <p align="justify">
-    - Crear una aplicación web optimizada y sencilla de comprender. Con estilos llamativos usando react para desarrollar el frontend de nuestra web.
+    A continuación se presentará nuestros objetivos para este proyecto: 
     
-    - Fomentar un espacio de recreación, tanto para jugadores competitivos como no competitivos.
+        - Crear una aplicación web optimizada y sencilla de comprender. Con estilos llamativos usando react para desarrollar el frontend de nuestra web.
     
-    - Creación de un espacio multiplataforma, nuestra aplicación garantizará flexibilidad en los dipositivos de disponibilidad de uso (escritorio y móvil). Esto arraiga que el diseño de nuestra web sea adaptable para distintas resoluciones.
+        - Fomentar un espacio de recreación, tanto para jugadores competitivos como no competitivos.
     
+        - Creación de un espacio multiplataforma, nuestra aplicación garantizará flexibilidad en los dipositivos de disponibilidad de uso (escritorio y móvil). Esto arraiga que el diseño de nuestra web sea adaptable para distintas resoluciones.
 </p>
