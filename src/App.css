@@ -1,0 +1,57 @@
+.App {
+  text-align: center;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #333333, #1a1a1a);
+}
+
+.menu-inicio {
+  text-align: center;
+  color: #fff;
+  margin-top: 100px;
+}
+
+.titulo-pagina {
+  margin-bottom: 50px;
+}
+
+.botones-juego {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.cuadrado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+  background-color: #555555;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+}
+
+.nombre-juego {
+  margin-bottom: 20px;
+}
+
+.imagen-juego {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+}
