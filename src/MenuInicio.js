@@ -1,8 +1,6 @@
 import React from 'react';
 import cuatroEnLineaImg from './images/4enlinea.jpg';
 import buscaminasImg from './images/buscaminas.jpg';
-import snakeImg from './images/snake.jpg';
-import ajedrezImg from './images/ajedrez.jpg';
 import tatetiImg from './images/tictactoe.jpg';
 
 
@@ -18,14 +16,6 @@ function MenuInicio() {
         <button className="cuadrado">
           <div className="nombre-juego">Buscaminas</div>
           <img className="imagen-juego" src={buscaminasImg} alt="Buscaminas" />
-        </button>
-        <button className="cuadrado">
-          <div className="nombre-juego">Snake</div>
-          <img className="imagen-juego" src={snakeImg} alt="Snake" />
-        </button>
-        <button className="cuadrado">
-          <div className="nombre-juego">Ajedrez</div>
-          <img className="imagen-juego" src={ajedrezImg} alt="Ajedrez" />
         </button>
         <button className="cuadrado">
           <div className="nombre-juego">Tic-Tac-Toe</div>
