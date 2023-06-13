@@ -22,6 +22,5 @@ Lu2Pathy es una aplicación web que contiene distintos juegos retro y de mesa. A
 </p>
 
 ### Avance de semana 12:
-
-    Link del avance (vistas y modelo del proyecto): https://docs.google.com/document/d/1DfZ5HRIoSKsfk4_sS8LO_7u6NHoqObBaoXGsaDrv5N8/edit 
+Link del avance (vistas y modelo del proyecto): https://docs.google.com/document/d/1DfZ5HRIoSKsfk4_sS8LO_7u6NHoqObBaoXGsaDrv5N8/edit 
     
