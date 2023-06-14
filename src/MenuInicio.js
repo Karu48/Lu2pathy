@@ -1,7 +1,7 @@
 import React from 'react';
-import cuatroEnLineaImg from './images/4enlinea.jpg';
 import tatetiImg from './images/tictactoe.jpg';
-import minesweeper from './images/minesweeper.png';
+import minesweeperIMG from './images/minesweeper.png';
+import connect4IMG from './images/connect4.jpeg';
 
 
 function MenuInicio() {
@@ -11,15 +11,15 @@ function MenuInicio() {
       <div className="botones-juego">
         <button className="cuadrado">
           <div className="nombre-juego">4 en línea</div>
-          <img className="imagen-juego" src = {cuatroEnLineaImg} alt="4 en línea" />
+          <img className="imagen-juego" src = {connect4IMG} alt="4 en línea" />
         </button>
         <button className="cuadrado">
           <div className="nombre-juego">Buscaminas</div>
-          <img className="imagen-juego" src={minesweeper} alt="Buscaminas" />
+          <img className="imagen-juego" src={minesweeperIMG} alt="Buscaminas" />
         </button>
         <button className="cuadrado">
           <div className="nombre-juego">Tic-Tac-Toe</div>
-          <img className="imagen-juego" src={tatetiImg} alt="Ta-Te-Ti" />
+          <img className="imagen-juego" src={tatetiImg} alt="Tic-Tac-Toe" />
         </button>
       </div>
     </div>

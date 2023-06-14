@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -14,7 +16,7 @@ class Player(db.Model):
     email: str
     password: str
 
-    username = db.Column(db.String(100), nullable=False, unique = True, primary_key = True)
+    username = db.Column(db.String(100), primary_key = True)
     email = db.Column(db.String(100), nullable=False, unique = True)
     password = db.Column(db.String(100), nullable=False)
 
@@ -22,16 +24,20 @@ class Player(db.Model):
         return f'<Player {self.username}>'
     
 @dataclass
-class Connect4(db.Model):
+class TwoPlayerGame(db.Model):
     id: int
     player1_username: str
     player2_username: str
-    winner = str
+    winner : str
+    game : str
 
-    id = db.Column(db.Integer, primary_key=True)
-    player1_username = db.Column(db.String(100), nullable=False)
-    player2_username = db.Column(db.String(100), nullable=False)
-    winner = db.Column(db.String(100), nullable=False)
+    id = db.Column(db.Integer, primary_key = True)
+    player1_username = db.Column(db.String(100), ForeignKey('Player.username'))
+    player2_username = db.Column(db.String(100), ForeignKey('Player.username'))
+    winner = db.Column(db.String(100), ForeignKey('Player.username'))
+    game = db.Column(db.String(100), nullable = False)
+
+    players = relationship('Player')
 
 @dataclass
 class Buscaminas(db.Model):
@@ -41,20 +47,12 @@ class Buscaminas(db.Model):
     time: int
 
     id = db.Column(db.Integer, primary_key=True)
-    player_username = db.Column(db.String(100), nullable=False)
+    player_username = db.Column(db.String(100), ForeignKey('Player.username'))
     difficulty = db.Column(db.Integer, nullable=False)
     time = db.Column(db.Integer, nullable=False)
-    
-class TTT(db.Model):
-    id: int
-    player1_username: str
-    player2_username: str
-    winner = str
 
-    id = db.Column(db.Integer, primary_key=True)
-    player1_username = db.Column(db.String(100), nullable=False)
-    player2_username = db.Column(db.String(100), nullable=False)
-    winner = db.Column(db.String(100), nullable=False)
+    player = relationship('Player')
+    
 
 with app.app_context():
     db.create_all()
