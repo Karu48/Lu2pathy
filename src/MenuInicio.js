@@ -9,7 +9,7 @@ function MenuInicio() {
     <div className="menu-inicio">
       <h1 className="titulo-pagina">LU2PATHY</h1>
       <div className="botones-juego">
-        <a href="/connect_4/_app.js">
+        <a href="/Connect4.js">
         <button className="cuadrado">
           <div className="nombre-juego">4 en línea</div>
           <img className="imagen-juego" src = {connect4IMG} alt="4 en línea" />
