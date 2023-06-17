@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import BoardHead from './components/BoardHead';
 import Board from "./components/Board";
+import './index.css';
+import "./styles/base.css"
 
 class Minesweeper extends Component {
     constructor() {
