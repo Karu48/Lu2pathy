@@ -1,0 +1,19 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+.board {
+  margin: auto;
+  display: grid;
+  justify-content: stretch;
+  width: 450px;
+  height: 400px;
+}
+.drop-button {
+  background-color: black;
+}
+
+.cell {
+  width: 100%;
+}
+
