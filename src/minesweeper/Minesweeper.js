@@ -104,6 +104,19 @@ class Minesweeper extends Component {
               endGame={this.endGame}
               celdasAbiertasClick={this.celdasHandleClick }
               changeFlagAmount={this.changeFlagAmount} />
+            <div className='LoginSignup'>
+                <div className='Username'>
+                    Username
+                </div>
+                <input type='text'></input>
+                <div className='Password'>
+                    Password
+                </div>
+                <input type='password'></input>
+                <br></br>
+                <button className='Login'>Login</button>
+                <button className='Signup'>Signup</button>
+            </div>
           </div>
         );
     }
