@@ -313,9 +313,36 @@ export default function ConnectFour() {
     }
     return gridTemplateColumns;
   }
-
+  
   return (
     <>
+      <div className='LoginSignup'>
+                <div className='Username'>
+                    Username
+                </div>
+                <input type='text'></input>
+                <div className='Password'>
+                    Password
+                </div>
+                <input type='password'></input>
+                <br></br>
+                <button className='Login'>Login</button>
+                <button className='Signup'>Signup</button>
+            </div>
+
+            <div className='LoginSignup2'>
+                <div className='Username 2'>
+                    Username
+                </div>
+                <input type='text'></input>
+                <div className='Password 2'>
+                    Password
+                </div>
+                <input type='password'></input>
+                <br></br>
+                <button className='Login'>Login</button>
+                <button className='Signup'>Signup</button>
+            </div>
       <div
         className={`board ${
           currentPlayer === boardSettings.colors.p1 ? "p1-turn" : "p2-turn"
