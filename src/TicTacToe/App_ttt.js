@@ -66,6 +66,34 @@ export default function TTT(){
             </div>
             <div className="Status">{status}</div>
             <div className="Restart">{restartButton}</div>
+
+            <div className='LoginSignup'>
+                <div className='Username'>
+                    Username
+                </div>
+                <input type='text'></input>
+                <div className='Password'>
+                    Password
+                </div>
+                <input type='password'></input>
+                <br></br>
+                <button className='Login'>Login</button>
+                <button className='Signup'>Signup</button>
+            </div>
+
+            <div className='LoginSignup2'>
+                <div className='Username 2'>
+                    Username
+                </div>
+                <input type='text'></input>
+                <div className='Password 2'>
+                    Password
+                </div>
+                <input type='password'></input>
+                <br></br>
+                <button className='Login'>Login</button>
+                <button className='Signup'>Signup</button>
+            </div>
         </>
     )
 }
