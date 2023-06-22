@@ -47,6 +47,21 @@ export default function TTT(){
 
     fetchLeaderboards();
 
+    function displayLeaderboards() {
+        const DisplayData = leaderboard.map(
+            (info)=>{
+                return(
+                    <tr>
+                        <td>{info.id}</td>
+                        <td>{info.player1_username}</td>
+                        <td>{info.player2_username}</td>
+                        <td>{info.winner}</td>
+                    </tr>
+                )
+            }
+        )
+    }
+
     return (
         <>
             <div className="Row">
