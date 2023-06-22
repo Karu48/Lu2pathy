@@ -1,5 +1,4 @@
 .square{
-    margin: 0px;
     width: 50px;
     height: 50px;
 }
@@ -9,6 +8,11 @@
     text-align: center;
     margin: 0px;
     display: flex;
+}
+
+.Status, .Restart{
+    text-align: center;
+    margin: 0px;
 }
 
 .LoginSignup {
@@ -85,4 +89,8 @@ cursor: pointer;
 .LoginSignup2 .Login:hover,
 .LoginSignup2 .Signup:hover {
 background-color: #45a049;
+}
+
+.leaderboard {
+    text-align: center;
 }

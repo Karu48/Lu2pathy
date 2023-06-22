@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "./styles.css";
 
 function Square({value, onSquareClick}){
@@ -39,28 +39,28 @@ export default function TTT(){
     const [leaderboard, setLeaderboard] = useState([]);
 
     function fetchLeaderboards(){
-        const headers = { 'Content-Type' : 'application/json'}
         fetch('http://127.0.0.1:5000/TicTacToe')
             .then(response => response.json())
             .then(data=> setLeaderboard(data));
     }
 
-    fetchLeaderboards();
 
-    function displayLeaderboards() {
-        const DisplayData = leaderboard.map(
-            (info)=>{
-                return(
-                    <tr>
-                        <td>{info.id}</td>
-                        <td>{info.player1_username}</td>
-                        <td>{info.player2_username}</td>
-                        <td>{info.winner}</td>
-                    </tr>
-                )
-            }
-        )
-    }
+    const displayData = leaderboard.map(
+        (info)=>{
+            return(
+                <tr>
+                    <td>{info.id}</td>
+                    <td>{info.player1_username}</td>
+                    <td>{info.player2_username}</td>
+                    <td>{info.winner}</td>
+                </tr>
+            )
+        }
+    )
+
+    useEffect(() => {
+        fetchLeaderboards();
+    }, []);
 
     return (
         <>
@@ -81,16 +81,20 @@ export default function TTT(){
             </div>
             <div className="Status">{status}</div>
             <div className="Restart"><button className="restart" onClick={restart}>Play again</button></div>
+            <br></br>
+            <br></br>
             <div className="Leaderboard">
                 <table>
                     <thead>
-                        <th>ID</th>
-                        <th>Player 1</th>
-                        <th>Player 2</th>
-                        <th>Winner</th>
+                        <tr>
+                            <th>ID</th>
+                            <th>Player 1</th>
+                            <th>Player 2</th>
+                            <th>Winner</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        
+                        {displayData}
                     </tbody>
                 </table>
             </div>
