@@ -33,19 +33,19 @@ export default function TTT(){
         }
 
     function restart(){
-        setXIsNext(false);
-        for (let i = 0; i < squares.length; i++){
-            squares[i] = null;
-        }
-        setSquares(squares);
+        window.location.reload(false);
     }
     
+    const [leaderboard, setLeaderboard] = useState([]);
 
-    function restartButton({winner}){
-        if (winner){
-            return <button className="restart" onClick={restart}>Play again</button>
-        }
+    function fetchLeaderboards(){
+        const headers = { 'Content-Type' : 'application/json'}
+        fetch('http://127.0.0.1:5000/TicTacToe')
+            .then(response => response.json())
+            .then(data=> setLeaderboard(data));
     }
+
+    fetchLeaderboards();
 
     return (
         <>
@@ -65,7 +65,20 @@ export default function TTT(){
                 <Square value = {squares[8]} onSquareClick={() => Click(8)}/>
             </div>
             <div className="Status">{status}</div>
-            <div className="Restart">{restartButton}</div>
+            <div className="Restart"><button className="restart" onClick={restart}>Play again</button></div>
+            <div className="Leaderboard">
+                <table>
+                    <thead>
+                        <th>ID</th>
+                        <th>Player 1</th>
+                        <th>Player 2</th>
+                        <th>Winner</th>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
 
             <div className='LoginSignup'>
                 <div className='Username'>
