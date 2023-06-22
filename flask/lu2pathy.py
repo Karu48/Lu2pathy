@@ -42,9 +42,6 @@ class Buscaminas(db.Model):
     player_username = db.Column(db.String(100), ForeignKey('player.username'))
     time = db.Column(db.Integer, nullable=False)
 
-    def __repr__(self):
-        return f'<Buscaminas {self.id}>'
-
 with app.app_context():
     db.create_all()
 

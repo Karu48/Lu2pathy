@@ -313,6 +313,32 @@ export default function ConnectFour() {
     }
     return gridTemplateColumns;
   }
+
+  const [leaderboard, setLeaderboard] = useState([]);
+
+  function fetchLeaderboards(){
+  fetch('http://127.0.0.1:5000/Connect4')
+      .then(response => response.json())
+      .then(data=> setLeaderboard(data));
+}
+
+
+const displayData = leaderboard.map(
+    (info)=>{
+        return(
+            <tr>
+                <td>{info.id}</td>
+                <td>{info.player1_username}</td>
+                <td>{info.player2_username}</td>
+                <td>{info.winner}</td>
+            </tr>
+        )
+    }
+)
+
+useEffect(() => {
+    fetchLeaderboards();
+}, []);
   
   return (
     <>
@@ -374,6 +400,23 @@ export default function ConnectFour() {
           <br />
         </>
       )}
+      <br />
+      <br />
+      <div className="Leaderboard">
+          <table>
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Player 1</th>
+                      <th>Player 2</th>
+                      <th>Winner</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {displayData}
+              </tbody>
+          </table>
+      </div>
     </>
   );
 }

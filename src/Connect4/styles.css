@@ -93,3 +93,12 @@ cursor: pointer;
 background-color: #45a049;
 }
 
+.Leaderboard {
+  text-align: center;
+  color: aquamarine;
+  width: 500px;
+}
+
+.Leaderboard table {
+  width: 500px;
+}

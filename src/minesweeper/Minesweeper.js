@@ -19,6 +19,19 @@ class Minesweeper extends Component {
         };
 
         this.baseState = this.state;
+        this.leaderboard = [];
+
+        this.displayData = this.leaderboard.map(
+            (info)=>{
+                return(
+                    <tr>
+                        <td>{info.id}</td>
+                        <td>{info.player_username}</td>
+                        <td>{info.time}</td>
+                    </tr>
+                )   
+            }
+        )
     }
 
     componentDidMount() {
@@ -84,6 +97,14 @@ class Minesweeper extends Component {
             return { celdasAbiertas: prevState.celdasAbiertas + 1 };
         });
     };
+    
+    fetchLeaderboards(){
+    fetch('http://127.0.0.1:5000/Minesweeper')
+        .then(response => response.json())
+        .then(data=> this.leaderboard = data);
+  }
+
+    
 
     render() {
         return (
@@ -104,6 +125,23 @@ class Minesweeper extends Component {
               endGame={this.endGame}
               celdasAbiertasClick={this.celdasHandleClick }
               changeFlagAmount={this.changeFlagAmount} />
+
+            <div className="Leaderboard">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Player 1</th>
+                            <th>Player 2</th>
+                            <th>Winner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.displayData}
+                    </tbody>
+                </table>
+            </div>
+
             <div className='LoginSignup'>
                 <div className='Username'>
                     Username
