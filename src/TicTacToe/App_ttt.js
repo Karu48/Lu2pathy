@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState, useEffect } from 'react';
 import "./styles.css";
 
@@ -58,6 +58,35 @@ export default function TTT(){
         }
     )
 
+    const [player1, setPlayer1] = useState(null);
+    const [pass1, setPass1] = useState(null);
+    
+    const refU1 = useRef(null);
+    const refP1 = useRef(null);
+
+    const setSpace1 = async () => {
+        setPlayer1(refU1.current.value);
+        setPass1(refP1.current.value);
+    }
+
+    const login1 = () => {
+        setSpace1();
+        fetch('http://127.0.0.1:5000/players', {
+            method: 'PUT',
+            body: JSON.stringify({
+                username: refU1.current.value,
+                password: refP1.current.value
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            }
+        })
+        .then(data => data.json())
+        .then((data) => {
+            console.log(data['response']);
+        })
+    }
+
     useEffect(() => {
         fetchLeaderboards();
     }, []);
@@ -103,13 +132,13 @@ export default function TTT(){
                 <div className='Username'>
                     Username
                 </div>
-                <input type='text'></input>
+                <input type='text' ref={refU1}></input>
                 <div className='Password'>
                     Password
                 </div>
-                <input type='password'></input>
+                <input type='password' ref={refP1}></input>
                 <br></br>
-                <button className='Login'>Login</button>
+                <button className='Login' onClick={login1}>Login</button>
                 <button className='Signup'>Signup</button>
             </div>
 

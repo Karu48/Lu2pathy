@@ -10,7 +10,7 @@ CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+ 
 db = SQLAlchemy(app)
 
 @dataclass
@@ -23,7 +23,6 @@ class Player(db.Model):
     def __repr__(self):
         return f'<Player {self.username}>'
 
-    
 @dataclass
 class TwoPlayerGame(db.Model):
 
@@ -45,7 +44,7 @@ class Buscaminas(db.Model):
 with app.app_context():
     db.create_all()
 
-@app.route('/players', methods = ['GET', 'POST'])
+@app.route('/players', methods = ['GET', 'POST', 'PUT'])
 def route_players():
     if request.method == 'GET':
         players = Player.query.all()
@@ -60,6 +59,14 @@ def route_players():
         except:
             return 'ERROR'
         return 'SUCCESS'
+    elif request.method == 'PUT':
+        player_data = request.get_json()
+        player = Player.query.filter_by(username = player_data['username']).first()
+        if (player == None):
+            return jsonify({'response':'ERROR'})
+        if (player.password == player_data['password']):
+            return jsonify({'response':'SUCCESS'})
+        return jsonify({'response':'ERROR'})
 
 @app.route('/minesweeper', methods = ['GET', 'POST'])
 def route_minesweeper():
@@ -77,7 +84,7 @@ def route_minesweeper():
         except:
             return 'ERROR'
         return 'SUCCESS'
-    
+
 @app.route('/Connect4', methods = ['GET', 'POST'])
 def route_connect4():
     if request.method == 'GET':
