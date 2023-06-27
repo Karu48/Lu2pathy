@@ -9,9 +9,36 @@ function Square({value, onSquareClick}){
 export default function TTT(){
     const [xIsNext, setXIsNext] = useState(false);
     const [squares, setSquares] = useState(Array(9).fill(null));
+    const [p1logged, setP1logged] = useState(false);
+    const [p2logged, setP2logged] = useState(false);
+    const [player1, setPlayer1] = useState(null);
+    const [player2, setPlayer2] = useState(null);
+    const [leaderboard, setLeaderboard] = useState([]);
+    const refU1 = useRef(null);
+    const refP1 = useRef(null);
+    const refU2 = useRef(null);
+    const refP2 = useRef(null);
+
+    function postWinner(winner_player) {
+        console.log(player1);
+        console.log(player2);
+        console.log(winner_player);
+        fetch('http://127.0.0.1:5000/TicTacToe', {
+            method: 'POST',
+            body: JSON.stringify({
+                player1_username: player1,
+                player2_username: player2,
+                winner: winner_player
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            }
+        })
+        .then(data => console.log(data));
+    }
 
     function Click(i){
-        if (squares[i] || calculateWinner(squares)){
+        if (squares[i] || calculateWinner(squares) || !p1logged || !p2logged){
             return;
         }
 
@@ -24,19 +51,20 @@ export default function TTT(){
           setXIsNext(!xIsNext);
         }
 
-        const winner = calculateWinner(squares);
+        var winner = calculateWinner(squares);
         let status;
-        if (winner){
-            status= "Winner: " + winner;
+        if (!p1logged || !p2logged){
+            status = "Awaiting for players to login...";
+        } else if (winner){
+            status = "Winner: " + winner;
         } else {
             status = "Next player: " + (xIsNext ? "X" : "O")
         }
 
+        
     function restart(){
         window.location.reload(false);
     }
-    
-    const [leaderboard, setLeaderboard] = useState([]);
 
     function fetchLeaderboards(){
         fetch('http://127.0.0.1:5000/TicTacToe')
@@ -58,19 +86,8 @@ export default function TTT(){
         }
     )
 
-    const [player1, setPlayer1] = useState(null);
-    const [pass1, setPass1] = useState(null);
-    
-    const refU1 = useRef(null);
-    const refP1 = useRef(null);
-
-    const setSpace1 = async () => {
-        setPlayer1(refU1.current.value);
-        setPass1(refP1.current.value);
-    }
-
     const login1 = () => {
-        setSpace1();
+        setPlayer1(refU1.current.value);
         fetch('http://127.0.0.1:5000/players', {
             method: 'PUT',
             body: JSON.stringify({
@@ -83,9 +100,56 @@ export default function TTT(){
         })
         .then(data => data.json())
         .then((data) => {
-            console.log(data['response']);
+            if (data['response'] === 'SUCCESS'){
+                setP1logged(true);
+            }
         })
     }
+
+    const login2 = () => {
+        setPlayer2(refU2.current.value);
+        fetch('http://127.0.0.1:5000/players', {
+            method: 'PUT',
+            body: JSON.stringify({
+                username: refU2.current.value,
+                password: refP2.current.value
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            }
+        })
+        .then(data => data.json())
+        .then((data) => {
+            if (data['response'] === 'SUCCESS'){
+                setP2logged(true);
+            }
+        })
+    }
+
+    function calculateWinner(squares) {
+        const lines = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6]
+        ];
+        for (let i = 0; i < lines.length; i++) {
+          const [a, b, c] = lines[i];
+          if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            if (squares[a] === 'O'){
+                postWinner(player1);
+            } else {
+                postWinner(player2);
+            }
+            return squares[a];
+          }
+        }
+        return null;
+      }
 
     useEffect(() => {
         fetchLeaderboards();
@@ -146,35 +210,15 @@ export default function TTT(){
                 <div className='Username 2'>
                     Username
                 </div>
-                <input type='text'></input>
+                <input type='text' ref={refU2}></input>
                 <div className='Password 2'>
                     Password
                 </div>
-                <input type='password'></input>
+                <input type='password' ref={refP2}></input>
                 <br></br>
-                <button className='Login'>Login</button>
+                <button className='Login' onClick={login2}>Login</button>
                 <button className='Signup'>Signup</button>
             </div>
         </>
     )
 }
-
-function calculateWinner(squares) {
-    const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-    ];
-    for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i];
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        return squares[a];
-      }
-    }
-    return null;
-  }
