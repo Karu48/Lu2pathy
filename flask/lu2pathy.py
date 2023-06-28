@@ -118,6 +118,34 @@ def route_TicTacToe():
         except:
             return 'ERROR'
         return 'SUCCESS'
+    
+@app.route('/players_mobile', methods = ['GET'])
+def route_players_mobile():
+    players = Player.query.all()
+    player_list = [{'username': player.username, 'email': player.email} for player in players]
+    response = {'players': player_list}
+    return jsonify(response)
+
+@app.route('/minesweeper_mobile', methods = ['GET'])
+def route_minesweeper_mobile():
+    games = Buscaminas.query.order_by(Buscaminas.time).all()
+    game_list = [{'id': game.id, 'player_username': game.player_username, 'time': game.time} for game in games]
+    response = {'leaderboard': game_list}
+    return jsonify(response)
+
+@app.route('Connect4_mobile', methods = ['GET'])
+def route_connect4_mobile():
+    games = TwoPlayerGame.query.filter_by(game = 'C4')
+    game_list = [{'id': game.id, 'player1_username': game.player1_username, 'player2_username': game.player2_username, 'winner': game.winner} for game in games]
+    response = {'winners': game_list}
+    return jsonify(response)
+
+@app.route('TicTacToe_mobile', methods = ['GET'])
+def route_tictactoe_mobile():
+    games = TwoPlayerGame.query.filter_by(game = 'TTT')
+    game_list = [{'id': game.id, 'player1_username': game.player1_username, 'player2_username': game.player2_username, 'winner': game.winner} for game in games]
+    response = {'winners': game_list}
+    return jsonify(response)
 
 if __name__ == '__main__':
     app.run(port=5000)

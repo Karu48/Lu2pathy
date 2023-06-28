@@ -4,6 +4,7 @@ import Board from "./components/Board";
 import './index.css';
 import "./styles/base.css"
 
+
 class Minesweeper extends Component {
     constructor() {
         super();
@@ -20,24 +21,11 @@ class Minesweeper extends Component {
 
         this.baseState = this.state;
         this.leaderboard = [];
-
-        this.displayData = this.leaderboard.map(
-            (info)=>{
-                return(
-                    <tr>
-                        <td>{info.id}</td>
-                        <td>{info.player_username}</td>
-                        <td>{info.time}</td>
-                    </tr>
-                )   
-            }
-        )
     }
 
     componentDidMount() {
         this.intervals = [];
     }
-
 
     componentDidUpdate(nextProps, nextState) {
         if (this.state.estado === "on") {
@@ -98,18 +86,27 @@ class Minesweeper extends Component {
         });
     };
     
-    fetchLeaderboards(){
+    fetchLeaderboards = () => {
     fetch('http://127.0.0.1:5000/Minesweeper')
         .then(response => response.json())
-        .then(data=> this.leaderboard = data);
+        .then(data => this.displayData = data.map(
+            (info)=>{
+                return(
+                    <tr>
+                        <td>{info.id}</td>
+                        <td>{info.player_username}</td>
+                        <td>{info.time}</td>
+                    </tr>
+                )   
+            }
+        ));
   }
 
-    
-
     render() {
+        this.fetchLeaderboards();
         return (
           <div className='minesweeper'>
-          <h1>Minesweeper Chess pes V:</h1>
+          <h1>Minesweeper</h1>
             <BoardHead 
               tiempo = {this.state.tiempo} 
               ContadorBanderas = {this.state.banderas} 
@@ -131,9 +128,8 @@ class Minesweeper extends Component {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Player 1</th>
-                            <th>Player 2</th>
-                            <th>Winner</th>
+                            <th>Player</th>
+                            <th>Time</th>
                         </tr>
                     </thead>
                     <tbody>
