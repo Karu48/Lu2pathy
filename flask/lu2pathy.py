@@ -133,14 +133,14 @@ def route_minesweeper_mobile():
     response = {'leaderboard': game_list}
     return jsonify(response)
 
-@app.route('Connect4_mobile', methods = ['GET'])
+@app.route('/Connect4_mobile', methods = ['GET'])
 def route_connect4_mobile():
     games = TwoPlayerGame.query.filter_by(game = 'C4')
     game_list = [{'id': game.id, 'player1_username': game.player1_username, 'player2_username': game.player2_username, 'winner': game.winner} for game in games]
     response = {'winners': game_list}
     return jsonify(response)
 
-@app.route('TicTacToe_mobile', methods = ['GET'])
+@app.route('/TicTacToe_mobile', methods = ['GET'])
 def route_tictactoe_mobile():
     games = TwoPlayerGame.query.filter_by(game = 'TTT')
     game_list = [{'id': game.id, 'player1_username': game.player1_username, 'player2_username': game.player2_username, 'winner': game.winner} for game in games]
