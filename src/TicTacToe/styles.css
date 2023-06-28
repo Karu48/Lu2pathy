@@ -10,6 +10,11 @@
     display: flex;
 }
 
+.game{
+    margin-top: 250px;
+    margin-bottom: 10px;
+}
+
 .LoginSignup {
     position: absolute;
     top: 10px;
@@ -88,12 +93,17 @@ background-color: #45a049;
 
 .Leaderboard {
     text-align: center;
+    position: relative;
     color: aquamarine;
     width: 300px;
+    border-collapse: collapse;
 }
 
 .Leaderboard table {
     width: 300px;
+    position: relative;
+    border-collapse: collapse;
+    border-spacing: 20px;;
 }
 
 .Status {

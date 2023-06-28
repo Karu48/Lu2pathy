@@ -9,8 +9,8 @@ function Square({value, onSquareClick}){
 export default function TTT(){
     const [xIsNext, setXIsNext] = useState(false);
     const [squares, setSquares] = useState(Array(9).fill(null));
-    const [p1logged, setP1logged] = useState(false);
-    const [p2logged, setP2logged] = useState(false);
+    const [p1logged, setP1logged] = useState('waiting');
+    const [p2logged, setP2logged] = useState('waiting');
     const [player1, setPlayer1] = useState(null);
     const [player2, setPlayer2] = useState(null);
     const [leaderboard, setLeaderboard] = useState([]);
@@ -38,28 +38,28 @@ export default function TTT(){
     }
 
     function Click(i){
-        if (squares[i] || calculateWinner(squares) || !p1logged || !p2logged){
+        if (squares[i] || calculateWinner(squares) || p1logged !== 'success' || p2logged !== 'success'){
             return;
         }
 
         if (xIsNext) {
             squares[i] = "X";
-          } else {
-            squares[i] = "O";
-          }
-          setSquares(squares);
-          setXIsNext(!xIsNext);
-        }
-
-        var winner = calculateWinner(squares);
-        let status;
-        if (!p1logged || !p2logged){
-            status = "Awaiting for players to login...";
-        } else if (winner){
-            status = "Winner: " + winner;
         } else {
-            status = "Next player: " + (xIsNext ? "X" : "O")
+            squares[i] = "O";
         }
+        setSquares(squares);
+        setXIsNext(!xIsNext);
+    }
+
+    var winner = calculateWinner(squares);
+    let status;
+    if ( p1logged !== 'success' || p2logged !== 'success'){
+        status = "Awaiting for players to login...";
+    } else if (winner){
+        status = "Winner: " + (winner === "O" ? player1 : player2);
+    } else {
+        status = (xIsNext ? player2 : player1) + "'s turn";
+    } 
 
         
     function restart(){
@@ -71,7 +71,6 @@ export default function TTT(){
             .then(response => response.json())
             .then(data=> setLeaderboard(data));
     }
-
 
     const displayData = leaderboard.map(
         (info)=>{
@@ -86,33 +85,32 @@ export default function TTT(){
         }
     )
 
-    const login1 = () => {
-        setPlayer1(refU1.current.value);
-        fetch('http://127.0.0.1:5000/players', {
-            method: 'PUT',
-            body: JSON.stringify({
-                username: refU1.current.value,
-                password: refP1.current.value
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            }
-        })
-        .then(data => data.json())
-        .then((data) => {
-            if (data['response'] === 'SUCCESS'){
-                setP1logged(true);
-            }
-        })
-    }
+    function signUp(type, player){
+        var user;
+        var pw;
+        var met;
 
-    const login2 = () => {
-        setPlayer2(refU2.current.value);
+        if (type === 'signup'){
+            met = 'POST';
+        } else if (type === 'login') {
+            met = 'PUT';
+        }
+
+        if (player === 1){
+            user = refU1.current.value;
+            setPlayer1(user);
+            pw = refP1.current.value;
+        } else if (player === 2){
+            user = refU2.current.value;
+            setPlayer2(user);
+            pw = refP2.current.value;
+        }
+
         fetch('http://127.0.0.1:5000/players', {
-            method: 'PUT',
+            method: met,
             body: JSON.stringify({
-                username: refU2.current.value,
-                password: refP2.current.value
+                username: user,
+                password: pw
             }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
@@ -121,7 +119,17 @@ export default function TTT(){
         .then(data => data.json())
         .then((data) => {
             if (data['response'] === 'SUCCESS'){
-                setP2logged(true);
+                if (player === 1){
+                    setP1logged('success');
+                } else if (player === 2){
+                    setP2logged('success');
+                }
+            } else {
+                if (player === 1){
+                    setP1logged('error');
+                } else if (player === 2){
+                    setP2logged('error');
+                }
             }
         })
     }
@@ -151,29 +159,45 @@ export default function TTT(){
         return null;
       }
 
+    let p1status = "Awaiting login...";
+    if (p1logged === 'success'){
+        p1status = "Logged in successfully";
+    } else if (p1logged === 'error'){
+        p1status = "Autentication failed";
+    }
+
+    let p2status = "Awaiting login...";
+    if (p2logged === 'success'){
+        p2status = "Logged in successfully";
+    } else if (p2logged === 'error'){
+        p2status = "Autentication failed";
+    }
+
     useEffect(() => {
         fetchLeaderboards();
     }, []);
 
     return (
         <>
-            <div className="Row">
-                <Square value = {squares[0]} onSquareClick={() => Click(0)} />
-                <Square value = {squares[1]} onSquareClick={() => Click(1)} />
-                <Square value = {squares[2]} onSquareClick={() => Click(2)} />
+            <div className="game">
+                <div className="Row">
+                    <Square value = {squares[0]} onSquareClick={() => Click(0)} />
+                    <Square value = {squares[1]} onSquareClick={() => Click(1)} />
+                    <Square value = {squares[2]} onSquareClick={() => Click(2)} />
+                </div>
+                <div className="Row">
+                    <Square value = {squares[3]} onSquareClick={() => Click(3)}/>
+                    <Square value = {squares[4]} onSquareClick={() => Click(4)}/>
+                    <Square value = {squares[5]} onSquareClick={() => Click(5)}/>
+                </div>
+                <div className="Row">
+                    <Square value = {squares[6]} onSquareClick={() => Click(6)}/>
+                    <Square value = {squares[7]} onSquareClick={() => Click(7)}/>
+                    <Square value = {squares[8]} onSquareClick={() => Click(8)}/>
+                </div>
+                <div className="Status">{status}</div>
+                <div className="Restart"><button className="restart" onClick={restart}>Play again</button></div>
             </div>
-            <div className="Row">
-                <Square value = {squares[3]} onSquareClick={() => Click(3)}/>
-                <Square value = {squares[4]} onSquareClick={() => Click(4)}/>
-                <Square value = {squares[5]} onSquareClick={() => Click(5)}/>
-            </div>
-            <div className="Row">
-                <Square value = {squares[6]} onSquareClick={() => Click(6)}/>
-                <Square value = {squares[7]} onSquareClick={() => Click(7)}/>
-                <Square value = {squares[8]} onSquareClick={() => Click(8)}/>
-            </div>
-            <div className="Status">{status}</div>
-            <div className="Restart"><button className="restart" onClick={restart}>Play again</button></div>
             <br></br>
             <br></br>
             <div className="Leaderboard">
@@ -202,8 +226,11 @@ export default function TTT(){
                 </div>
                 <input type='password' ref={refP1}></input>
                 <br></br>
-                <button className='Login' onClick={login1}>Login</button>
-                <button className='Signup'>Signup</button>
+                <button className='Login' onClick={() => signUp('login', 1)}>Login</button>
+                <button className='Signup' onClick={() => signUp('signup', 1)}>Signup</button>
+                <div className="p1status">
+                    { p1status }
+                </div>
             </div>
 
             <div className='LoginSignup2'>
@@ -216,8 +243,11 @@ export default function TTT(){
                 </div>
                 <input type='password' ref={refP2}></input>
                 <br></br>
-                <button className='Login' onClick={login2}>Login</button>
-                <button className='Signup'>Signup</button>
+                <button className='Login' onClick={() => signUp('login', 2)}>Login</button>
+                <button className='Signup' onClick={() => signUp('signup', 2)}>Signup</button>
+                <div className="p2status">
+                    { p2status }
+                </div>
             </div>
         </>
     )
