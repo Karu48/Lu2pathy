@@ -5,8 +5,6 @@ Lu2Pathy es una aplicación web que contiene distintos juegos retro y de mesa. A
 ## Juegos:
     - 4 en línea
     - Buscaminas
-    - Snake
-    - Ajedrez
     - Tic-Tac-Toe
 
 
