@@ -389,7 +389,7 @@ export default function ConnectFour() {
     const [leaderboard, setLeaderboard] = useState([]);
 
     function fetchLeaderboards(){
-    fetch('http://127.0.0.1:5000/Connect4')
+    fetch('http://127.0.0.1:5000/Connect4?_limit=10')
         .then(response => response.json())
         .then(data=> setLeaderboard(data));
 }

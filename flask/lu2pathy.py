@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from dataclasses import dataclass
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
